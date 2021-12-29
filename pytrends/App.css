@@ -1,0 +1,171 @@
+
+
+*{
+  margin: 0;
+  padding: 0;
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+.searchBox {
+  /* width:500px; */
+  width: 75%;
+  margin: 0 auto 0;
+  height:50px;
+  background-color: white;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+.box {
+  /* width:500px; */
+  width: 25%;
+  margin-left: 20px;
+  height:50px;
+  background-color: white;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+.searchBox i {
+font-size: 20px;
+color: #777;
+}
+.searchBox input {
+flex:1;
+height: 40px;
+border:none;
+outline:none;
+font-size: 18px;
+padding-left: 10px;
+}
+.box i {
+  font-size: 20px;
+  color: #777;
+  }
+  .box input {
+  flex:1;
+  height: 40px;
+  border:none;
+  outline:none;
+  font-size: 18px;
+  padding-left: 10px;
+  }
+.formStyle {
+  height: 100px;
+}
+.slider{
+  padding-left: 180px;
+  width: 75%;
+}
+.headingForWords{
+  padding-left:160px;
+}
+.graphBox{
+  width: 50%; 
+}
+.relatedWordsBox{
+  display: flex;
+  flex-direction: row;
+}
+@media screen and (max-width: 480px) {
+.searchBox{
+ width: 90%;
+ padding: 10px;
+ font-size: 8px;
+}
+.searchBox input {
+  width: 90%;
+  padding-left: 0px;
+  }
+  .searchBox i {
+    font-size: 15px;
+    color: #777;
+    }
+    .headingForWords{
+    padding: 0px;
+    text-align: center;
+    }
+    .box {
+      /* width:500px; */
+      width: 80%;
+      margin: 0 auto 0;
+      display: flex;
+      align-items: center;
+    }
+    .box i {
+      font-size:15px;
+      }
+      .box h5 {
+          font-size: 15px;
+      }
+      .box input {
+      font-size: 10px;
+      padding-left: 10px;
+      }
+      .relatedWordsBox{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0 auto 0;
+
+      }
+      .slider{
+        padding-left: 0px;
+        text-align: center;
+        display:flex;
+        flex-direction: column;
+        width: 100%
+      }
+      .slider h5{
+        font-size: 12px;
+      }
+      .slider input{
+        width: 100%;
+        margin: 4px auto 4px;
+      }
+      h6{
+        font-size: 12px;
+      }
+      .graphBox{
+        width: 90%; 
+      }
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
