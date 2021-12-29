@@ -50,5 +50,7 @@ Now to link this with your api that you have already made. You just need to copy
  **Testing App on local machine**
  ![image](https://user-images.githubusercontent.com/96161286/147668119-14f04eb1-177a-41e3-a6dd-34ca3662a269.png)
 
-Above screenshot shows the UI of our app and you can test it by clicking on any some searched words like Google, Instagram etc. The default values for the actual trend and prediction trend has been set to 6 and 2 months respectively. You can select the duration in months only. Thats how our app works and hope you like it.
-	
+Above screenshot shows the UI of our app and you can test it by clicking on any some searched words like Google, Instagram etc. The default values for the actual trend and prediction trend has been set to 6 and 2 months respectively. You can select the duration in months only. Thats how our app works and hope you like it.Video for demo
+**Video for demo**
+![ezgif-7-306edbb716](https://user-images.githubusercontent.com/96161286/147673630-0cd10e61-27ea-403d-a1d8-68f0076484e3.gif)
+
