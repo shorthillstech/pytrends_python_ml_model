@@ -28,7 +28,7 @@ handleSubmit=event=>{
     predictionDuration: this.state.predictionDuration,
     trendDuration:this.state.trendDuration
   }
-  axios.post(`https://ecd7-35-236-221-66.ngrok.io/trends?name=`+user.keyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
+  axios.post(`http://127.0.0.1:5000/trends?name=`+user.keyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
   .then(res=>{
       this.setState({seasonable:res.data.Seasonality_Present,checkSeasonable:res.data.Seasonality_Present.toString(),trend:res.data.trends,trendData:res.data.trends.concat(res.data.predict_trends),label:res.data.trends_date.concat(res.data.predict_date)});
       })
@@ -39,7 +39,7 @@ submit=(s)=>{
         predictionDuration: s.predictionDuration,
         trendDuration:s.trendDuration
       }
-      axios.post(`https://ecd7-35-236-221-66.ngrok.io/trends?name=`+user.keyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
+      axios.post(`http://127.0.0.1:5000/trends?name=`+user.keyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
         .then(res=>{
           this.setState({seasonable:res.data.Seasonality_Present,checkSeasonable:res.data.Seasonality_Present.toString(),trend:res.data.trends,trendData:res.data.trends.concat(res.data.predict_trends),label:res.data.trends_date.concat(res.data.predict_date)});
           })
