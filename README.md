@@ -54,9 +54,9 @@ Install the default dependencies by running the following command.
 ```npm start```
 
 
-## Sample Video 
+## Sample video
 
-<img src="./docs/colab.gif" width="700" height="400" />
+<img src="./doc/pytrends.gif" width="700" height="400" />
 
 
 
