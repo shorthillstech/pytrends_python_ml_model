@@ -94,46 +94,46 @@ onInput() {
                   <button  className="bg-white"><i className="fa fa-search"/></button>
                </div>
              </form>
-                <div className="text-center  py-4 text-white">
+                <div className="text-center  py-2 text-white">
                   {checkSeasonable===""?"":seasonable?<h3>Seasonal</h3>:<h3>Not Seasonal</h3>}
                 </div>
               </div>
                 <div className="container-fluid mt-4">
                   <h3 className="headingForWords my-2 ">Some suggested words...</h3>
-                  <div className="d-flex mt-4 justify-content-center relatedWordsBox">
+                  <div className="d-flex mt-2 justify-content-center relatedWordsBox">
                     <div className="box bg-white mt-2" onClick={()=>this.importName("Google")}>
                      <i className="fa fa-search"></i>
-                     <h5 className="mx-auto pt-2" >Google</h5>
+                     <h5 className="mx-auto pt-1" >Google</h5>
                     </div>
                     <div className="box bg-white mt-2"onClick={()=>this.importName("Instagram")}>
                      <i className="fa fa-search"></i>
-                      <h5 className="mx-auto pt-2">Instagram</h5>
+                      <h5 className="mx-auto pt-1">Instagram</h5>
                     </div>
                   </div>
                   <div className="d-flex justify-content-center relatedWordsBox">
                     <div className="box bg-white mt-2"onClick={()=>this.importName("React")}>
                       <i className="fa fa-search"></i>
-                      <h5 className="mx-auto pt-2">React</h5>
+                      <h5 className="mx-auto pt-1">React</h5>
                     </div>
                       <div className="box bg-white mt-2"onClick={()=>this.importName("Machine Learning")}>
                         <i className="fa fa-search"></i>
-                        <h5 className="mx-auto pt-2">Machine Learning</h5>
+                        <h5 className="mx-auto pt-1">Machine Learning</h5>
                      </div> 
                   </div>
                   <div className="d-flex  justify-content-center relatedWordsBox">
                     <div className="box bg-white mt-2"onClick={()=>this.importName("Snow")}>
                     <i className="fa fa-search"></i>
-                    <h5 className="mx-auto pt-2">Snow</h5>
+                    <h5 className="mx-auto pt-1">Snow</h5>
                   </div>
                   <div className="box bg-white mt-2"onClick={()=>this.importName("Car")}>
                     <i className="fa fa-search"></i>
-                    <h5 className="mx-auto pt-2">Car</h5>
+                    <h5 className="mx-auto pt-1">Car</h5>
                   </div>
                  </div>
                </div>  
               <div className=" d-flex justify-content-between mt-4 slider">
               <label><h5>Select the prediction duration:</h5> </label>
-                    <input id="predictInp" className="w-50" type="range" min="2" max="36" step="1" defaultValue="2" 
+                    <input id="predictInp" onMouseLeave={this.onInput.bind(this)} className="w-50" type="range" min="2" max="36" step="1" defaultValue="2" 
                     />
                </div>
                 <h6 className="mt-2 text-center">Prediction Duration: {this.state.predictionDuration} Months</h6>
