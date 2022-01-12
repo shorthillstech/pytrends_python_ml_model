@@ -4,6 +4,7 @@ import '@fortawesome/react-fontawesome'
 import {Chart, ArcElement, CategoryScale, registerables} from 'chart.js'
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import HomePage from "./homePage"
  Chart.register(ArcElement,CategoryScale, ...registerables);
  class Charts extends Component {
  state={
@@ -14,6 +15,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   trendDuration:6,
   seasonable: false,
   checkSeasonable: "",
+  id: "",
+  view:0,
 }
 handleChange=event=>{
   let s1= {...this.state}
@@ -21,25 +24,34 @@ handleChange=event=>{
   s1.seasonable= false; 
   this.setState(s1);
 }
+handleName=(name)=>{
+  let s1={...this.state};
+  s1.id=name;
+  s1.view=1;
+  this.setState(s1);
+}
 handleSubmit=event=>{
   event.preventDefault();
+  
   const user ={
     keyword: this.state.keyword,
+    id:this.state.id,
     predictionDuration: this.state.predictionDuration,
     trendDuration:this.state.trendDuration
   }
-  axios.post(`http://127.0.0.1:5000/trends?name=`+user.keyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
+  axios.post(user.id+`/trends?name=`+user.keyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
   .then(res=>{
       this.setState({seasonable:res.data.Seasonality_Present,checkSeasonable:res.data.Seasonality_Present.toString(),trend:res.data.trends,trendData:res.data.trends.concat(res.data.predict_trends),label:res.data.trends_date.concat(res.data.predict_date)});
       })
 }
 submit=(s)=>{
     const user ={
+      id:this.state.id,
         keyword: s.keyword,
         predictionDuration: s.predictionDuration,
         trendDuration:s.trendDuration
       }
-      axios.post(`http://127.0.0.1:5000/trends?name=`+user.keyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
+      axios.post(user.id+`/trends?name=`+user.keyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
         .then(res=>{
           this.setState({seasonable:res.data.Seasonality_Present,checkSeasonable:res.data.Seasonality_Present.toString(),trend:res.data.trends,trendData:res.data.trends.concat(res.data.predict_trends),label:res.data.trends_date.concat(res.data.predict_date)});
           })
@@ -63,8 +75,16 @@ onInput() {
   this.submit(s1)
 }
   render(){
-    let {seasonable,checkSeasonable} = this.state
-  return (
+    let {seasonable,checkSeasonable,view,id} = this.state
+  return view===0
+  ?<React.Fragment>
+         <HomePage 
+         id={id}
+         onSubmit={this.handleName}
+         />
+  </React.Fragment>
+  :view===1
+  ? (
     <div className="container-fluid bg-light p-0">
       <div className="text-center bg-primary">
          <h2 className="text-center py-4 text-white">Explore what the world is searching:</h2>
@@ -166,6 +186,7 @@ onInput() {
     </div>
 </div>
   )
-}
+  :""
+          }
 }
 export default Charts
