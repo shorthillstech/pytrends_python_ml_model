@@ -23,8 +23,8 @@ handleSubmit=(e)=>{
                 <input
                 type="text"
                 className="form-control"
-                id="name"
-                name="name"
+                id="name1"
+                name="name1"
                 value={id}
                
                 onChange={this.handleChange}
