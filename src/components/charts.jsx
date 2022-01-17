@@ -164,7 +164,7 @@ onInput() {
                         <h5 className="mx-auto pt-2">Machine Learning</h5>
                      </div> 
                   </div>
-                  <div className="d-flex  justify-content-center relatedWordsBox">
+                  <div className="d-flex   justify-content-center hello">
                     <div className="box bg-white mt-2"onClick={()=>this.importName("Snow")}>
                     <i className="fa fa-search"></i>
                     <h5 className="mx-auto pt-2">Snow</h5>
