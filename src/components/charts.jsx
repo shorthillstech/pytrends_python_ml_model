@@ -4,172 +4,148 @@ import '@fortawesome/react-fontawesome'
 import {Chart, ArcElement, CategoryScale, registerables} from 'chart.js'
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HomePage from "./homePage"
+import LinkPage from "./linkPage"
  Chart.register(ArcElement,CategoryScale, ...registerables);
  class Charts extends Component {
  state={
-  label:[],
+  labels:[],
   trendData:[],
-  keyword:'',
+  searchKeyword:'',
   predictionDuration:2,
   trendDuration:6,
-  seasonable: false,
+  isSeasonable: false,
   checkSeasonable: "",
-  id: "",
-  id1:"",
+  serverLink: "",
   view:0,
   loader: false
 }
-handleChange=(e)=>{
-  let s1= {...this.state}
-  s1.keyword=e.target.value;
-  s1.seasonable= false; 
-  this.setState(s1);
+handleSearchBox=(e)=>{
+  let copyState= {...this.state}
+  copyState.searchKeyword=e.target.value;
+  copyState.isSeasonable= false; 
+  this.setState(copyState);
 }
-handleChange1=(e)=>{
-  let s1= {...this.state}
-  s1.predictionDuration=e.target.value;
-  this.setState(s1);
+handlePredictionDuration=(e)=>{
+  let copyState= {...this.state}
+  copyState.predictionDuration=e.target.value;
+  this.setState(copyState);
 }
-handleChange2=(e)=>{
-  let s1= {...this.state}
-  s1.trendDuration=e.target.value;
-  this.setState(s1);
+handleTrendDuration=(e)=>{
+  let copyState= {...this.state}
+  copyState.trendDuration=e.target.value;
+  this.setState(copyState);
 }
-blurFunction =()=> {
- let s1={...this.state}
- s1.loader=true;
- s1.keyword=document.getElementById("name").value
- this.setState(s1)
- this.submit(s1);
+onBlurSearchBox =()=> {
+ let copyState={...this.state}
+ copyState.loader=true;
+ copyState.searchKeyword=document.getElementById("word").value
+ this.setState(copyState)
+ this.submit(copyState);
   
 }
-handleName=(name)=>{
-  let s1={...this.state};
-  s1.id1=name;
-  s1.view=1;
-  this.setState(s1);
+handleLink=(link)=>{
+  let copyState={...this.state};
+  copyState.serverLink=link;
+  copyState.view=1;
+  this.setState(copyState);
 }
-// handleSubmit=event=>{
-//   event.preventDefault(); 
-//   let s1={...this.state}
-//   const user ={
-//     keyword: this.state.keyword,
-//     id:this.state.id1,
-//     predictionDuration: this.state.predictionDuration,
-//     trendDuration:this.state.trendDuration
-//   }
-//   axios.post(user.id+`/trends?name=`+user.keyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
-//   .then(res=>{
-//       this.setState({loader:false,seasonable:res.data.Seasonality_Present,checkSeasonable:res.data.Seasonality_Present.toString(),trend:res.data.trends,trendData:res.data.trends.concat(res.data.predict_trends),label:res.data.trends_date.concat(res.data.predict_date)});
-//       }).catch(
-//         function (error) {
-//          window.alert("The link you entered is not in working please refresh the page and try again")
-//         }
-//       )
-// }
-submit=(s)=>{
+submit=(value)=>{
     const user ={
-      id:this.state.id1,
-        keyword: s.keyword,
-        predictionDuration: s.predictionDuration,
-        trendDuration:s.trendDuration,
+      serverLink:this.state.serverLink,
+      searchKeyword: value.searchKeyword,
+        predictionDuration: value.predictionDuration,
+        trendDuration:value.trendDuration,
       }
-      axios.post(user.id+`/trends?name=`+user.keyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
+      axios.post(user.serverLink+`/trends?name=`+user.searchKeyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
         .then(res=>{
-          this.setState({loader:false,seasonable:res.data.Seasonality_Present,checkSeasonable:res.data.Seasonality_Present.toString(),trend:res.data.trends,trendData:res.data.trends.concat(res.data.predict_trends),label:res.data.trends_date.concat(res.data.predict_date)});
+          console.log(res);
+          this.setState({loader:false,isSeasonable:res.data.Seasonality_Present,checkSeasonable:res.data.Seasonality_Present.toString(),trend:res.data.trends,trendData:res.data.trends.concat(res.data.predict_trends),labels:res.data.trends_date.concat(res.data.predict_date)});
           }).catch(
             function (error) {
              window.alert("The link you entered is not in working");
+             console.log("Helllooo",this.state.loader);
             }
           )
 }
-importName=(name)=>{
-  let s1={...this.state}
-  s1.keyword=name;
-  s1.loader=true;
-  this.setState(s1);
-  this.submit(s1)
+handleClickedSuggestedWord=(clickedWord)=>{
+  let copyState={...this.state}
+  copyState.searchKeyword=clickedWord;
+  copyState.loader=true;
+  this.setState(copyState);
+  this.submit(copyState)
 }
 handleKey=(e)=>{
-  let s1={...this.state}
+  let copyState={...this.state}
 
   if(e.key==='Enter')
   {
-    this.submit(s1);
+    this.submit(copyState);
   }
  
 }
 
 onInput() {
-  console.log("hello");
-  var inputPredict = document.getElementById("predictInp");
-  var inputTrend = document.getElementById("trendInp")
-  var currentValForPredict = inputPredict.value;
-  var cuurentValForTrend = inputTrend.value
-  let s1= {...this.state}
-  s1.predictionDuration=currentValForPredict;
-  s1.trendDuration=cuurentValForTrend;
-  s1.loader=true;
-  this.setState(s1)
-  this.submit(s1)
+  let currentValForPredict = document.getElementById("predictSlider").value;
+  let cuurentValForTrend = document.getElementById("trendSlider").value
+  let copyState= {...this.state}
+  copyState.predictionDuration=currentValForPredict;
+  copyState.trendDuration=cuurentValForTrend;
+  copyState.loader=true;
+  this.setState(copyState)
+  this.submit(copyState)
 }
   render(){
-    let {seasonable,checkSeasonable,view,id1} = this.state
+    let {isSeasonable,checkSeasonable,view,serverLink} = this.state
     console.log(this.state.loader)
   return view===0
   ?<React.Fragment>
-         <HomePage 
-         id={id1}
-         onSubmit={this.handleName}
+         <LinkPage 
+         serverLink={serverLink}
+         onSubmit={this.handleLink}
          />
   </React.Fragment>
   :view===1
   ? (
-    <div className="container-fluid bg-light p-0">
-      {this.state.loader ? <div class="contain" role="status">
-  <div class="loader"></div>
-</div>: ""}
+    <div className="container-fluid bg-light">
+      {this.state.loader ? <div class="loader"></div>: ""}
       <div className="text-center bg-primary">
          <h2 className="text-center py-4 text-white">Explore what the world is searching:</h2>
-            <form onSubmit={this.handleSubmit} className="d-flex formStyle">
               <div className="searchBox">
-                 <input type="text" onKeyDown={this.handleKey} id="name" value={this.state.keyword} placeholder="Enter search word" className="bg-white" onBlur={this.blurFunction} onChange={this.handleChange}/>
+                 <input type="text" onKeyDown={this.handleKey} id="word" value={this.state.searchKeyword} placeholder="Enter search word" className="bg-white" onBlur={this.onBlurSearchBox} onChange={this.handleSearchBox}/>
                   <button className="bg-white"><i className="fa fa-search"/></button>
                </div>
-             </form>
                 <div className="text-center  py-4 text-white">
-                  {checkSeasonable===""?"":seasonable?<h3>Seasonal</h3>:<h3>Not Seasonal</h3>}
+                  {checkSeasonable===""?"":isSeasonable?<h3>Seasonal</h3>:<h3>Not Seasonal</h3>}
                 </div>
               </div>
                 <div className="container-fluid mt-4">
                   <h3 className="headingForWords my-2 ">Some suggested words...</h3>
-                  <div className="d-flex mt-4 justify-content-center relatedWordsBox">
-                    <div className="box bg-white mt-2" onClick={()=>this.importName("Google")}>
+                  <div className="d-flex mt-4 justify-content-center relatedWordsBoxContainer">
+                    <div className="suggestedWordBox bg-white mt-2" onClick={()=>this.handleClickedSuggestedWord("Google")}>
                      <i className="fa fa-search"></i>
                      <h5 className="mx-auto pt-2" >Google</h5>
                     </div>
-                    <div className="box bg-white mt-2"onClick={()=>this.importName("Instagram")}>
+                    <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleClickedSuggestedWord("Instagram")}>
                      <i className="fa fa-search"></i>
                       <h5 className="mx-auto pt-2">Instagram</h5>
                     </div>
                   </div>
                   <div className="d-flex justify-content-center relatedWordsBox">
-                    <div className="box bg-white mt-2"onClick={()=>this.importName("React")}>
+                    <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleClickedSuggestedWord("React")}>
                       <i className="fa fa-search"></i>
                       <h5 className="mx-auto pt-2">React</h5>
                     </div>
-                      <div className="box bg-white mt-2"onClick={()=>this.importName("Machine Learning")}>
+                      <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleClickedSuggestedWord("Machine Learning")}>
                         <i className="fa fa-search"></i>
                         <h5 className="mx-auto pt-2">Machine Learning</h5>
                      </div> 
                   </div>
-                  <div className="d-flex   justify-content-center hello">
-                    <div className="box bg-white mt-2"onClick={()=>this.importName("Snow")}>
+                  <div className="d-flex   justify-content-center active">
+                    <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleClickedSuggestedWord("Snow")}>
                     <i className="fa fa-search"></i>
                     <h5 className="mx-auto pt-2">Snow</h5>
                   </div>
-                  <div className="box bg-white mt-2"onClick={()=>this.importName("Car")}>
+                  <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleClickedSuggestedWord("Car")}>
                     <i className="fa fa-search"></i>
                     <h5 className="mx-auto pt-2">Car</h5>
                   </div>
@@ -177,30 +153,30 @@ onInput() {
                </div>  
               <div className=" d-flex justify-content-between mt-4 slider">
               <label><h5>Select the prediction duration:</h5> </label>
-                    <input id="predictInp" className="w-50" type="range" min="2" max="36" step="1" defaultValue="2" onChange={this.handleChange1} onMouseLeave={this.onInput.bind(this)}
+                    <input id="predictSlider" className="w-50" type="range" min="2" max="36" step="1" defaultValue="2" onChange={this.handlePredictionDuration} onMouseLeave={this.onInput.bind(this)}
                     />
                </div>
                 <h6 className="mt-2 text-center">Prediction Duration: {this.state.predictionDuration} Months</h6>
               <div className=" d-flex justify-content-between mt-4 slider">
               <label><h5>Select the trend duration: </h5></label>
-              <input id="trendInp" className="w-50" type="range" min="6" max="120" step="1" defaultValue="6" onChange={this.handleChange2} onMouseLeave={this.onInput.bind(this)}
+              <input id="trendSlider" className="w-50" type="range" min="6" max="120" step="1" defaultValue="6" onChange={this.handleTrendDuration} onMouseLeave={this.onInput.bind(this)}
               />
               </div>
                <h6 className="mt-2 text-center">Actual Trend Duration: {this.state.trendDuration} Months</h6>
-               <div className="text-center graphBox  mx-auto bg-white">
+               <div className="text-center graphContainer  mx-auto bg-white">
               <Line     
             data={{
-              labels: [...this.state.label],
+              labels: [...this.state.labels],
             
               datasets: [
                 {
-                  label: 'Trend',
+                  labels: 'Trend',
                   data: this.state.trend,
                   backgroundColor: 'red',
                   borderColor: 'red',
                 },
                 {
-                  label: 'Prediction Trend',
+                  labels: 'Prediction Trend',
                   data: this.state.trendData,
                   backgroundColor:  'blue',
                   borderColor:  'blue',

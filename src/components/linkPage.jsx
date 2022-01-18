@@ -1,20 +1,20 @@
 import React,{Component} from "react";
-class HomePage extends Component{
+class LinkPage extends Component{
     state={
-        id:this.props.id,
+        serverLink:this.props.serverLink,
     }
     handleChange=(e)=>{
         const {currentTarget:input}=e;
         let s1={...this.state}
-        s1.id=input.value
+        s1.serverLink=input.value
         this.setState(s1);
     }
 handleSubmit=(e)=>{
     e.preventDefault();
-    this.props.onSubmit(this.state.id)
+    this.props.onSubmit(this.state.serverLink)
 }
     render(){
-        let {id}=this.state;
+        let {serverLink}=this.state;
         return (
             <div className="container">
                 <h3 className="text-center" >Welcome to the Pytrends</h3>
@@ -23,12 +23,10 @@ handleSubmit=(e)=>{
                 <input
                 type="text"
                 className="form-control"
-                id="name1"
-                name="name1"
-                value={id}
-               
+                id="link"
+                name="link"
+                value={serverLink}
                 onChange={this.handleChange}
-                onBlurr={this.handleValidate}
                 />
                 </div>
                 <br/>
@@ -39,4 +37,4 @@ handleSubmit=(e)=>{
         )
     }
 }
-export default HomePage;
+export default LinkPage;
