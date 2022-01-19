@@ -72,8 +72,9 @@ submit=(value)=>{
         .then(res=>{
           this.setState({loader:false,isSeasonable:res.data.Seasonality_Present,checkSeasonable:res.data.Seasonality_Present.toString(),trend:res.data.trends,trendData:res.data.trends.concat(res.data.predict_trends),labels:res.data.trends_date.concat(res.data.predict_date)});
           }).catch(
-            function (error) {
-             window.alert("The link you entered is not in working");
+             (error) => {
+             window.alert("Invalid link. Please enter another link.");
+            this.setState({view:0})
             }
           )
 }
