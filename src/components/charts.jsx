@@ -5,6 +5,7 @@ import {Chart, ArcElement, CategoryScale, registerables} from 'chart.js'
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LinkPage from "./linkPage"
+import Slider from './slider.jsx'
  Chart.register(ArcElement,CategoryScale, ...registerables);
  class Charts extends Component {
  state={
@@ -17,7 +18,7 @@ import LinkPage from "./linkPage"
   checkSeasonable: "",
   serverLink: "",
   view:0,
-  loader: false
+  loader: false,
 }
 handleSearchBox=(e)=>{
   let copyState= {...this.state}
@@ -25,23 +26,34 @@ handleSearchBox=(e)=>{
   copyState.isSeasonable= false; 
   this.setState(copyState);
 }
-handlePredictionDuration=(e)=>{
+handlePredictionDuration=(value)=>{
   let copyState= {...this.state}
-  copyState.predictionDuration=e.target.value;
+  copyState.predictionDuration=value[0];
+  copyState.loader=true;
   this.setState(copyState);
+  this.submit(copyState);
 }
-handleTrendDuration=(e)=>{
+handleTrendDuration=(value)=>{
   let copyState= {...this.state}
-  copyState.trendDuration=e.target.value;
+  copyState.trendDuration=value[0];
+  copyState.loader=true;
   this.setState(copyState);
+  this.submit(copyState);
 }
 onBlurSearchBox =()=> {
  let copyState={...this.state}
- copyState.loader=true;
  copyState.searchKeyword=document.getElementById("word").value
- this.setState(copyState)
- this.submit(copyState);
-  
+ if(copyState.searchKeyword)
+ {
+  copyState.loader=true;
+  this.setState(copyState)
+  this.submit(copyState);
+ }
+ else
+ {
+   window.alert("Please enter some thing")
+   return ;
+ }
 }
 handleLink=(link)=>{
   let copyState={...this.state};
@@ -58,16 +70,14 @@ submit=(value)=>{
       }
       axios.post(user.serverLink+`/trends?name=`+user.searchKeyword+`&&predicton_time=`+user.predictionDuration+`&&trend_time=`+user.trendDuration)
         .then(res=>{
-          console.log(res);
           this.setState({loader:false,isSeasonable:res.data.Seasonality_Present,checkSeasonable:res.data.Seasonality_Present.toString(),trend:res.data.trends,trendData:res.data.trends.concat(res.data.predict_trends),labels:res.data.trends_date.concat(res.data.predict_date)});
           }).catch(
             function (error) {
              window.alert("The link you entered is not in working");
-             console.log("Helllooo",this.state.loader);
             }
           )
 }
-handleClickedSuggestedWord=(clickedWord)=>{
+handleSuggestedWord=(clickedWord)=>{
   let copyState={...this.state}
   copyState.searchKeyword=clickedWord;
   copyState.loader=true;
@@ -79,6 +89,8 @@ handleKey=(e)=>{
 
   if(e.key==='Enter')
   {
+    copyState.loader=true;
+    this.setState(copyState);
     this.submit(copyState);
   }
  
@@ -88,16 +100,13 @@ onInput() {
   let currentValForPredict = document.getElementById("predictSlider").value;
   let cuurentValForTrend = document.getElementById("trendSlider").value
   let copyState= {...this.state}
-  copyState.predictionDuration=currentValForPredict;
-  copyState.trendDuration=cuurentValForTrend;
-  copyState.loader=true;
+  copyState.predictionDurationLabel=currentValForPredict;
+  copyState.trendDurationLabel=cuurentValForTrend;
   this.setState(copyState)
-  this.submit(copyState)
 }
   render(){
     let {isSeasonable,checkSeasonable,view,serverLink} = this.state
-    console.log(this.state.loader)
-  return view===0
+  return  view===0
   ?<React.Fragment>
          <LinkPage 
          serverLink={serverLink}
@@ -105,7 +114,8 @@ onInput() {
          />
   </React.Fragment>
   :view===1
-  ? (
+  ?
+    <React.Fragment>
     <div className="container-fluid bg-light">
       {this.state.loader ? <div class="loader"></div>: ""}
       <div className="text-center bg-primary">
@@ -121,48 +131,60 @@ onInput() {
                 <div className="container-fluid mt-4">
                   <h3 className="headingForWords my-2 ">Some suggested words...</h3>
                   <div className="d-flex mt-4 justify-content-center relatedWordsBoxContainer">
-                    <div className="suggestedWordBox bg-white mt-2" onClick={()=>this.handleClickedSuggestedWord("Google")}>
+                    <div className="suggestedWordBox bg-white mt-2" onClick={()=>this.handleSuggestedWord("Google")}>
                      <i className="fa fa-search"></i>
                      <h5 className="mx-auto pt-2" >Google</h5>
                     </div>
-                    <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleClickedSuggestedWord("Instagram")}>
+                    <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleSuggestedWord("Instagram")}>
                      <i className="fa fa-search"></i>
                       <h5 className="mx-auto pt-2">Instagram</h5>
                     </div>
                   </div>
                   <div className="d-flex justify-content-center relatedWordsBox">
-                    <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleClickedSuggestedWord("React")}>
+                    <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleSuggestedWord("React")}>
                       <i className="fa fa-search"></i>
                       <h5 className="mx-auto pt-2">React</h5>
                     </div>
-                      <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleClickedSuggestedWord("Machine Learning")}>
+                      <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleSuggestedWord("Machine Learning")}>
                         <i className="fa fa-search"></i>
                         <h5 className="mx-auto pt-2">Machine Learning</h5>
                      </div> 
                   </div>
                   <div className="d-flex   justify-content-center active">
-                    <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleClickedSuggestedWord("Snow")}>
+                    <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleSuggestedWord("Snow")}>
                     <i className="fa fa-search"></i>
                     <h5 className="mx-auto pt-2">Snow</h5>
                   </div>
-                  <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleClickedSuggestedWord("Car")}>
+                  <div className="suggestedWordBox bg-white mt-2"onClick={()=>this.handleSuggestedWord("Car")}>
                     <i className="fa fa-search"></i>
                     <h5 className="mx-auto pt-2">Car</h5>
                   </div>
                  </div>
-               </div>  
-              <div className=" d-flex justify-content-between mt-4 slider">
-              <label><h5>Select the prediction duration:</h5> </label>
-                    <input id="predictSlider" className="w-50" type="range" min="2" max="36" step="1" defaultValue="2" onChange={this.handlePredictionDuration} onMouseLeave={this.onInput.bind(this)}
-                    />
+               </div> 
+               <div className='container row'>
+               <label className='col-md-4 col-sm-12 heading'>Select the prediction duration:</label> 
+              <div className="col-md-8 col-sm-12">
+                {this.state.loader?"": <Slider
+                defaultValue={this.state.predictionDuration}
+                min={2}
+                max={36}
+                label={"Prediction Duration"}
+                onChange={this.handlePredictionDuration}
+                />}
                </div>
-                <h6 className="mt-2 text-center">Prediction Duration: {this.state.predictionDuration} Months</h6>
-              <div className=" d-flex justify-content-between mt-4 slider">
-              <label><h5>Select the trend duration: </h5></label>
-              <input id="trendSlider" className="w-50" type="range" min="6" max="120" step="1" defaultValue="6" onChange={this.handleTrendDuration} onMouseLeave={this.onInput.bind(this)}
-              />
-              </div>
-               <h6 className="mt-2 text-center">Actual Trend Duration: {this.state.trendDuration} Months</h6>
+               </div>
+               <div className='container row'>
+               <label className='col-md-4 col-sm-12 text-center heading'>Select the trend duration:</label>
+              <div className="col-md-8 col-sm-12">
+               {this.state.loader?"": <Slider
+                defaultValue={this.state.trendDuration}
+                min={6}
+                max={120}
+                label={"Actual Trend Duration"}
+                onChange={this.handleTrendDuration}
+                />}
+               </div>
+               </div>
                <div className="text-center graphContainer  mx-auto bg-white">
               <Line     
             data={{
@@ -205,7 +227,7 @@ onInput() {
           />  
     </div>
 </div>
-  )
+</React.Fragment>
   :""
           }
 }
