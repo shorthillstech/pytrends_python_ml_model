@@ -230,6 +230,6 @@ onInput() {
 </div>
 </React.Fragment>
   :""
-          }
+   }
 }
 export default Charts
