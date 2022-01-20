@@ -20,14 +20,16 @@ You can use the GoogleTrends file in your Colab setup
 
 ```pip install -U flask-cors```
 
-```pip install flask-ngrok```
+```pip install darts```
 
-```! pip install transformers```
+```pip install pyyaml```
+
+```pip install pytrends```
+
 
 ## Instruction
 First, set up this repository on your local machine or colab.
-Installing all dependency in your local machine or colab.
-and, authentication you ngrok token. 
+Installing all dependency in your Machine and authentication your ngrok token. 
  
 To run 
 run all the jupiter or colab cell
@@ -40,7 +42,7 @@ at line 7 on ```ngrok authtoken "<_YOUR_NGROK_TOKEN_>"``` this is your ngrok tok
 ## React Installation
 
 Clone the Application on your local system.
-After cloning the application on your local system use ```cd Pytrends-python-ML-Model``` command to go to the Cartoon ML model Directory 
+After cloning the application on your local system use ```cd Pytrends-python-ML-Model``` command to go to the Pytrends ML model Directory 
 
 Install the default dependencies by running the following command.
 
