@@ -129,7 +129,7 @@ onInput() {
                   {checkSeasonable===""?"":isSeasonable?<h3>Seasonal</h3>:<h3>Not Seasonal</h3>}
                 </div>
               </div>
-                <div className="container-fluid mt-4">
+                <div className="container mt-4">
                   <h3 className="headingForWords my-2 ">Some suggested words...</h3>
                   <div className="d-flex mt-4 justify-content-center relatedWordsBoxContainer">
                     <div className="suggestedWordBox bg-white mt-2" onClick={()=>this.handleSuggestedWord("Google")}>
@@ -162,7 +162,7 @@ onInput() {
                   </div>
                  </div>
                </div> 
-               <div className='container row'>
+               <div className='container mx-auto row'>
                <label className='col-md-4 col-sm-12 heading'>Select the prediction duration:</label> 
               <div className="col-md-8 col-sm-12">
                 {this.state.loader?"": <Slider
@@ -174,8 +174,8 @@ onInput() {
                 />}
                </div>
                </div>
-               <div className='container row'>
-               <label className='col-md-4 col-sm-12 text-center heading'>Select the trend duration:</label>
+               <div className='container mx-auto row'>
+               <label className='col-md-4 col-sm-12 heading'>Select the trend duration:</label>
               <div className="col-md-8 col-sm-12">
                {this.state.loader?"": <Slider
                 defaultValue={this.state.trendDuration}
