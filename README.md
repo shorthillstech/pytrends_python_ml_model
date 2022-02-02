@@ -3,8 +3,10 @@
 <br>
 </h1>
 
+
 ## What is this for?
 This repository give you information about Google trends and Predition data. 
+
 
 
 ## Models and technologies used.
@@ -12,6 +14,7 @@ This repository give you information about Google trends and Predition data.
 Unofficial API for Google Trends
 
 Allows simple interface for automating downloading of reports from Google Trends. Only good until Google changes their backend again :-P. When that happens feel free to contribute!
+
 
 
 ## Links to references
