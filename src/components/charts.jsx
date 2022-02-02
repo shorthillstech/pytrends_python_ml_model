@@ -122,7 +122,7 @@ onInput() {
       <div className="text-center bg-primary">
          <h2 className="text-center py-4 text-white">Explore what the world is searching:</h2>
               <div className="searchBox">
-                 <input type="text" onKeyDown={this.handleKey} id="word" value={this.state.searchKeyword} placeholder="Enter search word" className="bg-white" onBlur={this.onBlurSearchBox} onChange={this.handleSearchBox}/>
+                 <input type="text" id="word" onKeyDown={this.handleKey} value={this.state.searchKeyword} placeholder="Enter search word" className="bg-white" onBlur={this.onBlurSearchBox} onChange={this.handleSearchBox}/>
                   <button className="bg-white"><i className="fa fa-search"/></button>
                </div>
                 <div className="text-center  py-4 text-white">
