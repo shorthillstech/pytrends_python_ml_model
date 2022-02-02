@@ -3,8 +3,25 @@
 <br>
 </h1>
 
+
 ## What is this for?
 This repository give you information about Google trends and Predition data. 
+
+
+
+## Models and technologies used.
+
+Unofficial API for Google Trends
+
+Allows simple interface for automating downloading of reports from Google Trends. Only good until Google changes their backend again :-P. When that happens feel free to contribute!
+
+
+
+## Links to references
+
+Python link
+
+https://pypi.org/project/pytrends/
 
 
 ## File Path
@@ -12,6 +29,8 @@ Here is the file path for Google Trends ML Model.
 ```/GoogleTrendsAPI/GoogleTrends.ipynb```
 
 You can use the GoogleTrends file in your Colab setup
+
+
 
 ## Installation
 ```pip install flask-ngrok```
